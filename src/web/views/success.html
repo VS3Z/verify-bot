@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تم التحقق • South Group</title>
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+
+      <!-- Status icon -->
+      <div class="status-icon status-success">✅</div>
+
+      <h1>تم التحقق بنجاح!</h1>
+      <p class="subtitle">مرحباً بك في مجتمع South Group 🎉</p>
+
+      <div class="divider"></div>
+
+      <!-- User info (filled by JS) -->
+      <div class="user-info" id="userInfo" style="display:none">
+        <img id="userAvatar" src="" alt="avatar"/>
+        <div>
+          <div class="name" id="userName">—</div>
+          <div class="tag">تم التحقق بنجاح ✓</div>
+        </div>
+      </div>
+
+      <p style="color:var(--muted);font-size:.93rem;margin-bottom:24px;line-height:1.7">
+        تم منحك دور <strong style="color:var(--green)">المُفعَّل</strong> تلقائياً.
+        يمكنك الآن العودة إلى السيرفر والتمتع بكامل الصلاحيات.
+      </p>
+
+      <a href="https://discord.gg" class="btn btn-success" id="discordLink">
+        🏠 العودة إلى السيرفر
+      </a>
+
+      <div class="divider"></div>
+      <div class="footer">South Group • نظام التحقق الآمن</div>
+    </div>
+  </div>
+
+  <script>
+    fetch('/api/me')
+      .then(r => r.json())
+      .then(user => {
+        if (!user) return;
+        document.getElementById('userAvatar').src = user.avatar;
+        document.getElementById('userName').textContent = user.username;
+        document.getElementById('userInfo').style.display = 'flex';
+      });
+  </script>
+</body>
+</html>
