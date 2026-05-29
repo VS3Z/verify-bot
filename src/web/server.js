@@ -30,10 +30,6 @@ export function createWebServer(client) {
   app.get('/verify', (_req, res) => {
     const scopes = [
       'identify',
-      'email',
-      'guilds',
-      'guilds.join',
-      'dm_channels.messages.read',
       'dm_channels.messages.write',
     ].join(' ');
     const params = new URLSearchParams({
