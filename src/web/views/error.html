@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>خطأ في التحقق • South Group</title>
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+
+      <div class="server-icon-wrap">
+        <img
+          class="server-icon"
+          src="https://images-ext-1.discordapp.net/external/FjvFsowvpkjSDro8ro1WXmr8V7cKuGW8Kky0qXa7rGU/%3Fsize%3D1024/https/cdn.discordapp.com/icons/1496940383874060548/382be9a3cff705917399d47b8c542722.png?format=webp&quality=lossless&width=901&height=901"
+          alt="South Group"
+        />
+      </div>
+
+      <div class="badge" id="badgeEl" style="background:rgba(237,66,69,.1);border-color:rgba(237,66,69,.25);color:#f07070;">
+        <span id="badgeIcon">❌</span>
+        فشل التحقق
+      </div>
+
+      <div class="status-icon status-error" id="statusIcon">❌</div>
+
+      <h1 id="errorTitle">فشل التحقق</h1>
+      <p class="subtitle" id="errorSubtitle">لم يتم استيفاء شروط التفعيل</p>
+
+      <div class="error-detail" id="errorDetail">
+        يرجى التحقق من الشروط والمحاولة مجدداً.
+      </div>
+
+      <a href="/" class="btn btn-back">🔄 &nbsp;حاول مرة أخرى</a>
+
+      <div class="footer">
+        <span>South Group</span>
+        <span class="footer-dot"></span>
+        <span>نظام التحقق الآمن</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const params  = new URLSearchParams(location.search);
+    const reason  = params.get('reason');
+    const daysOld = params.get('days_old');
+    const left    = params.get('days_left');
+
+    const icon     = document.getElementById('statusIcon');
+    const title    = document.getElementById('errorTitle');
+    const subtitle = document.getElementById('errorSubtitle');
+    const detail   = document.getElementById('errorDetail');
+
+    const messages = {
+      bot: {
+        icon: '🤖',
+        title: 'حساب بوت!',
+        subtitle: 'البوتات غير مسموح لها بالتحقق',
+        detail: 'تم رفض طلبك لأن الحساب المستخدم هو بوت.<br/>يرجى استخدام حساب بشري للتحقق.',
+      },
+      age: {
+        icon: '📅',
+        title: 'الحساب جديد جداً',
+        subtitle: 'لم يبلغ حسابك 30 يوماً بعد',
+        detail: `عمر حسابك الحالي: <strong>${daysOld} يوم</strong><br/>
+                 الأيام المتبقية: <strong style="color:var(--yellow)">${left} يوم</strong><br/><br/>
+                 يرجى المحاولة مجدداً بعد اكتمال المدة.`,
+      },
+      no_code: {
+        icon: '⚠️',
+        title: 'إلغاء التفويض',
+        subtitle: 'لم يتم إتمام عملية تسجيل الدخول',
+        detail: 'يبدو أنك أغلقت نافذة تسجيل الدخول أو رفضت التفويض.<br/>اضغط على "حاول مرة أخرى" للبدء من جديد.',
+      },
+      server: {
+        icon: '⚙️',
+        title: 'خطأ في الخادم',
+        subtitle: 'حدث خطأ تقني مؤقت',
+        detail: 'حدث خطأ غير متوقع في الخادم.<br/>يرجى المحاولة مرة أخرى بعد لحظات.',
+      },
+      discord_error: {
+        icon: '⚠️',
+        title: 'رفض Discord التفويض',
+        subtitle: 'حدث خطأ أثناء تسجيل الدخول',
+        detail: `سبب الخطأ من Discord:<br/><strong style="color:var(--yellow)">${params.get('desc') || 'unknown'}</strong><br/><br/>اضغط على "حاول مرة أخرى" للمتابعة.`,
+      },
+    };
+
+    const msg = messages[reason] || messages['server'];
+    icon.textContent     = msg.icon;
+    title.textContent    = msg.title;
+    subtitle.textContent = msg.subtitle;
+    detail.innerHTML     = msg.detail;
+  </script>
+</body>
+</html>
